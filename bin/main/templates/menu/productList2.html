@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="./css/bootstrap.css">
+    <script src="./js/bootstrap.bundle.js"></script>
+  
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css?family=Nanum+Gothic:400,700,800&amp;subset=korean" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Do+Hyeon&display=swap" rel="stylesheet">
+ <link href="https://fonts.googleapis.com/css2?family=Jua&display=swap" rel="stylesheet">
+<style>
+ 
+  #firstcell{
+		width: 100%;
+		 border-collapse: collapse;
+		border-top : 1px solid #867a7a49;
+		    
+  }
+  table {
+		  width: 100%;
+		  border-collapse: collapse;
+		  border-bottom : 1px solid #867a7a49;   
+   }
+  
+   th, td {
+   	border: none;
+    padding: 10px;
+    border-collapse: collapse;
+  }
+  
+  .title{
+	 font-family:"Black Han Sans", sans-serif;
+     font-size: 22px ;
+    
+  }
+  
+ .detail{
+ 	font-size: 12px ;
+ 		padding:0px;
+  }
+  .price{
+ 	 font-family:"Black Han Sans", sans-serif;
+     font-weight: 500;
+     font-size: 22px;
+  	  padding:0px;         
+   	  
+  }
+</style>
+</head>
+
+<body>
+	<header>
+	
+	
+	<div id="header" th:include="/layout/header :: header"></div>
+	
+	 <nav class="navbar navbar-expand-sm">
+        <ul class="navbar-nav col-3">
+             <button type="button" class="btn pl-0"> << </button>
+        </ul>
+           <ul class="navbar-nav">
+            <li class=" text-center">메뉴<li>
+        </ul>
+        <button class="mycart_btn" id="mycart_btn">장바구니</button>
+        
+        <input type="hidden" value="${session.userId}" id="login_userid">        
+ 
+    </nav>
+    
+		<ul class="nav nav-justified nav-pills" id="menuli">
+		
+	         <li class="nav-item">
+	     	    <a href="/menu" class="nav-link link-dark active">피자</a>
+	         </li>
+	         <li class="nav-item">
+	             <a href="/menu2" class="nav-link link-dark">사이드</a>
+	         </li>
+	         <li class="nav-item">
+	              <a href="/menu3" class="nav-link link-dark">음료</a>
+	         </li>
+	     </ul>
+	</header>
+
+    <main>
+    	<div class="container mt-5">
+			<div class="row">
+				<div class="col-sm">
+					<ul class="list-unstyled">
+						<li class="mb-3  position-relative" th:if="${#lists.size(boardList2)} > 0" th:each="item : ${boardList2}">
+						
+							<a href="/menu/" class="stretched-link text-decoration-none" th:attrappend="href=${item.menuSeq}">
+								<div class="row">
+									<div class="col-6">
+										<img th:src="${item.menuStoredFilePath}" class="w-100" style="max-height: 100px;">
+									</div>
+									<div class="col">
+										<h3 class="title" th:text="${item.menuName}"></h3>
+										<p class="text-muted small detail">설명</p>
+										<p class="mb-0 price" th:text="${item.menuPrice}">가격</p>
+									</div>
+								</div>
+							</a>
+						</li>
+						
+					</ul>
+					<!-- <div class="row">
+								<div class="col-5">
+									<a href="/menu/" class="stretched-link"  th:attrappend="href=${item.menuSeq}">
+										<img src="pizza1.jpg" th:src="@{/img/cheesePizza.jpg}" class="mw-100" style="max-height: 100px;">
+									</a>
+								</div>
+								<div class="col">
+									<h3 class="title">
+										<a href="/menu/" class="stretched-link text-decoration-none"  th:attrappend="href=${item.menuSeq}"  th:text="${item.menuName}"></a>
+									</h3>
+									<p class="text-muted small detail">설명</p>
+									<p class="mb-0 price" th:text="${item.menuPrice}">가격</p>
+								</div>
+							</div> -->
+				
+				
+	     	     	<!-- <div class="position-relative">
+						<table class="table-hover" id="firstcell">
+							<colgroup>
+								<col width="30%" />
+								<col width="40%" />
+							</colgroup>			
+							<tbody>	
+								<tr >		
+									<td rowspan="4"> <img src="pizza1.jpg"  th:src="@{/img/cheesePizza.jpg}" class="w-100" style="max-height: 100px;"></td>				
+								</tr>
+								<tr  class="py-5 my-5">
+									<td th:text="${boardList2[0].menuName}" id="title" class="pt-3 mt-3 py-0 my-0 px-0"></td>
+								</tr>
+								<tr>
+									<td id="detail" class="text-muted small">#토마토 소스가 풍부한 모짜렐라</td>							
+								</tr>
+								<tr >
+									<td th:text="${boardList2[0].menuPrice}" id="price" class="pt-0 mt-0 py-2 my-2">
+										<a href="/menu/" class="stretched-link"  th:attrappend="href=${boardList2.menuSeq}"></a>
+									</td>	
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				
+				<div class="position-relative">
+				<table class="table-hover " >
+						<colgroup>
+							<col width="30%" />
+							<col width="40%" />
+						</colgroup>			
+						<tbody>	
+						<tr >		
+							<td rowspan="4"> <img src="pizza1.jpg"  th:src="@{/img/cheesePizza.jpg}" class="w-100" style="max-height: 100px;"></td>				
+						</tr>
+						<tr  class="py-5 my-5">
+							<td th:text="${boardList2[1].menuName}" id="title" class="pt-3 mt-3 py-0 my-0 px-0"></td>
+						</tr>
+						<tr>
+							<td id="detail" class="text-muted small">#토마토 소스가 풍부한 모짜렐라</td>							
+						</tr>
+						<tr >	
+							<td th:text="${boardList2[1].menuPrice}" id="price" class="pt-0 mt-0 py-2 my-2"></td>	
+							 <a href="#" class="stretched-link"></a>			
+						</tr>
+					</tbody>
+				</table>
+				
+				</div> -->
+				
+							
+
+			</div>
+		</div>
+	</div>
+       		 	  
+		       
+		            	 
+            		 
+       
+       </main>
+   
+         
+      
+</body>
